@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import profileImage from "../../images/20240822_200310.jpg";
 import { Github, Linkedin, Instagram, Facebook, Send, Phone } from "lucide-react";
 
 const socialLinks = [
@@ -20,7 +21,7 @@ export const Hero = () => {
               {/* Profile Image */}
               <div className="flex-shrink-0">
                 <img
-                  src="./20240822_200310.jpg"
+                  src={profileImage}
                   alt="Bethe Bayou"
                   className="w-48 md:w-52 h-auto rounded-md"
                 />

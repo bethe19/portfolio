@@ -1,25 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
+import moodieImage from "../../images/Screenshot 2025-09-08 231345.png";
+import notieImage from "../../images/image.png";
+import scoutaiImage from "../../images/1.webp";
 
 const projects = [
   {
     title: "Moodie - Mood based Movie Discovery Web App",
     description: "Built with HTML, CSS, and JavaScript, integrated with the TMDB API. Features real-time movie search and interactive card hover animations. Moodie is a web platform built for movie enthusiasts to discover, browse, and keep track of films in a seamless way. Users can explore new releases, search for specific titles, read details, and curate personalized watchlists. The site focuses on providing a simple, intuitive interface that makes movie discovery easy and enjoyable, while helping users organize their movie interests in one place. The goal is to combine functionality with a clean design, making the experience smooth and engaging for anyone who loves films.",
-    image: "Screenshot 2025-09-08 231345.png",
+    image: moodieImage,
     github: "https://github.com/bethe19/moodie-movie-site",
     live: "https://moodie-neon.vercel.app",
   },
   {
     title: "Notie - Simple Note Taking App",
     description: "This is a small note-taking app I built using HTML, CSS, and JavaScript. I made it just to practice DOM manipulation, localStorage, and overall how to make something useful from scratch. Notie is a lightweight, user-friendly note-taking application designed to help users capture ideas, tasks, and reminders efficiently. It allows for creating, editing, and organizing notes across different categories, making information easy to access and manage. The focus of Notie is on simplicity and speed, reducing friction in jotting down thoughts while maintaining a clean and organized interface. It’s intended for students, professionals, and anyone looking to streamline how they manage their notes and ideas.",
-    image: "image.png",
+    image: notieImage,
     github: "https://github.com/bethe19/notie",
     live: "https://notie-ashen.vercel.app/",
   },
   {
     title: "ScoutAI – Football Talent Analysis (In Progress)",
     description: "Custom AI project concept to analyze football talent. Aimed at building a mid-level AI model for practical scouting applications. ScoutAI is an AI-driven platform aimed at analyzing football talent and performance in a data-driven way. The idea is to help scouts, coaches, and players gain insights into player abilities, track progress over time, and make more informed decisions. Using AI models and real-world football data, ScoutAI intends to turn raw performance metrics into actionable insights. Though still in development, the project combines sports knowledge, data analysis, and software engineering to create a tool that bridges the gap between talent evaluation and measurable performance.",
-    image: "1.webp",
+    image: scoutaiImage,
     github: "#",
     live: "#",
     inProgress: true,
