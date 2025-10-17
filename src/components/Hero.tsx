@@ -20,7 +20,7 @@ export const Hero = () => {
               {/* Profile Image */}
               <div className="flex-shrink-0">
                 <img
-                  src="/20240822_200310.jpg"
+                  src="./20240822_200310.jpg"
                   alt="Bethe Bayou"
                   className="w-48 md:w-52 h-auto rounded-md"
                 />
