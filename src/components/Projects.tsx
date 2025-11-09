@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
-import moodieImage from "../../images/Screenshot 2025-09-08 231345.png";
+import moodieImage from "../../images/Screenshot 2025-11-09 182951.png";
 import notieImage from "../../images/image.png";
 import scoutaiImage from "../../images/1.webp";
 
