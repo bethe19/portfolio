@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import moodieImage from "../../images/Screenshot 2025-11-09 182951.png";
 import notieImage from "../../images/image.png";
 import scoutaiImage from "../../images/1.webp";
+import abrenInteriorsImage from "../../images/Screenshot 2025-11-10 142406.png"
 
 const projects = [
   {
@@ -29,6 +30,12 @@ const projects = [
     live: "#",
     inProgress: true,
   },
+  {
+    "title": "Abren Interiors – Premium Interior Design & Construction Studio",
+    "description": "Abren Interiors is a modern, award-winning design studio website that showcases luxury interior solutions and construction expertise. Featuring a clean, elegant UI with high-quality visuals, smooth navigation, and compelling CTAs, it highlights 500+ completed projects, 98% client satisfaction, and 15+ years of experience. Built for seamless user experience, it offers free consultations, portfolio exploration, and service discovery to turn visions into reality.",
+    "image": abrenInteriorsImage,
+    "live": "https://abreninteriors.com"
+  }
 ];
 
 
@@ -45,10 +52,10 @@ const ProjectCard = ({
     className={`group h-full rounded-2xl overflow-hidden bg-card/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-slide-up backdrop-blur-sm ${className}`}
     style={{ animationDelay: `${index * 100}ms` }}
   >
-    <div className="flex h-full flex-col md:flex-row">
+    <div className="flex h-full flex-col">
       {/* Image */}
-      <div className="md:w-80 flex-shrink-0">
-        <div className="relative aspect-video md:h-full md:aspect-[4/3.5] overflow-hidden bg-secondary">
+      <div className="flex-shrink-0">
+        <div className="relative aspect-video overflow-hidden bg-secondary">
           <img
             src={project.image}
             alt={project.title}
@@ -61,7 +68,9 @@ const ProjectCard = ({
       <div className="flex flex-1 flex-col gap-4 p-5 md:p-6">
         <div className="space-y-2">
           <h3 className="text-lg md:text-xl font-semibold leading-tight">{project.title}</h3>
-          <p className="text-sm text-muted-foreground text-justify">{project.description}</p>
+          <p className="text-sm text-muted-foreground text-justify line-clamp-2">
+            {project.description}
+          </p>
         </div>
 
         <div className="mt-auto flex flex-wrap gap-3 pt-2">
@@ -180,27 +189,22 @@ export const Projects = () => {
             Projects
           </h2>
 
-          {/* Mobile carousel */}
-          <div className="md:hidden">
-            <div ref={emblaRef} className="overflow-hidden px-6">
-              <div className="flex -ml-3 -mr-3 py-4">
+          <div>
+            <div ref={emblaRef} className="overflow-hidden px-4 sm:px-6">
+              <div className="flex -mx-3 sm:-mx-4 py-4">
                 {projects.map((project, index) => (
                   <div
                     key={project.title}
-                    className={`pl-3 pr-3 flex-[0_0_82%] min-w-0 transition-all duration-300 ${
+                    className={`px-3 sm:px-4 min-w-0 flex-shrink-0 transition-all duration-300 basis-[85%] sm:basis-[70%] lg:basis-[55%] xl:basis-[45%] ${
                       index === selectedIndex ? "opacity-100" : "opacity-60"
                     }`}
                   >
-                    <ProjectCard
-                      project={project}
-                      index={index}
-                      className=""
-                    />
+                    <ProjectCard project={project} index={index} />
                   </div>
                 ))}
               </div>
             </div>
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-2 md:gap-3 mt-6">
               {scrollSnaps.map((_, index) => (
                 <button
                   key={`project-dot-${index}`}
@@ -213,13 +217,6 @@ export const Projects = () => {
                 />
               ))}
             </div>
-          </div>
-
-          {/* Desktop layout */}
-          <div className="hidden md:flex flex-col gap-6">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} />
-            ))}
           </div>
         </div>
       </div>
