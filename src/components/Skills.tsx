@@ -28,19 +28,19 @@ export const Skills = () => {
             {skills.map((skill, index) => (
               <div
                 key={skill.name}
-                className="group relative border border-border rounded-lg p-6 bg-card flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-slide-up"
+                className="group relative border border-border rounded-lg dev-mode:rounded-none p-6 bg-card flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:scale-105 dev-mode:border-2 dev-mode:hover:border-foreground/40 animate-slide-up"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 {skill.icon.startsWith("fab ") ? (
-                  <i className={`${skill.icon} text-2xl transition-transform group-hover:scale-110`}></i>
+                  <i className={`${skill.icon} text-2xl transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12`}></i>
                 ) : (
                   <img
                     src={skill.icon}
                     alt={skill.name}
-                    className="w-8 h-8 transition-transform group-hover:scale-110 dark:invert"
+                    className="w-8 h-8 transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12 dark:invert"
                   />
                 )}
-                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-card border border-border px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap">
+                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-card border border-border px-3 py-1 rounded-lg dev-mode:rounded-none text-xs font-medium whitespace-nowrap dev-mode:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:border-2">
                   {skill.name}
                 </span>
               </div>

@@ -4,6 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Copy } from "lucide-react";
+import emailjs from '@emailjs/browser';
+
+// EmailJS configuration - Update these with your EmailJS credentials
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +17,7 @@ export const Contact = () => {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const copyToClipboard = (text: string, label: string) => {
@@ -21,10 +28,80 @@ export const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:bethebayou@gmail.com?subject=Message from ${formData.name}&body=${formData.message}%0D%0A%0D%0AFrom: ${formData.email}`;
-    window.location.href = mailtoLink;
+    setIsSubmitting(true);
+
+    // Validate EmailJS configuration
+    if (EMAILJS_SERVICE_ID === 'your_service_id' || 
+        EMAILJS_TEMPLATE_ID === 'your_template_id' || 
+        EMAILJS_PUBLIC_KEY === 'your_public_key') {
+      toast({
+        title: "Configuration Error",
+        description: "EmailJS is not configured. Please set up your EmailJS credentials in .env file.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Initialize EmailJS with public key (only once)
+      if (!emailjs.init) {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+      }
+
+      // Send email using EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'bethebayou@gmail.com',
+        reply_to: formData.email,
+      };
+
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('EmailJS Response:', response);
+
+      if (response.text === 'OK' || response.status === 200) {
+        toast({
+          title: "Message sent!",
+          description: "Thank you for contacting me. I'll get back to you soon.",
+        });
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        throw new Error('Unexpected response from EmailJS');
+      }
+    } catch (error: any) {
+      console.error('Error sending message:', error);
+      
+      let errorMessage = "Failed to send message. Please try again later.";
+      
+      if (error?.text) {
+        errorMessage = `Error: ${error.text}`;
+      } else if (error?.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -70,7 +147,7 @@ export const Contact = () => {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
-              className="bg-background border-border"
+              className="bg-background border-border dev-mode:rounded-none dev-mode:border-2 dev-mode:hover:border-foreground/40 dev-mode:focus:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:transition-all dev-mode:duration-300"
             />
             <Input
               type="email"
@@ -78,7 +155,7 @@ export const Contact = () => {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
-              className="bg-background border-border"
+              className="bg-background border-border dev-mode:rounded-none dev-mode:border-2 dev-mode:hover:border-foreground/40 dev-mode:focus:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:transition-all dev-mode:duration-300"
             />
             <Textarea
               placeholder="Your Message"
@@ -86,13 +163,14 @@ export const Contact = () => {
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               required
               rows={6}
-              className="bg-background border-border resize-none"
+              className="bg-background border-border resize-none dev-mode:rounded-none dev-mode:border-2 dev-mode:hover:border-foreground/40 dev-mode:focus:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:transition-all dev-mode:duration-300"
             />
             <Button 
               type="submit" 
-              className="w-full bg-foreground text-background hover:opacity-90 transition-opacity"
+              disabled={isSubmitting}
+              className="w-full bg-foreground text-background hover:opacity-90 transition-all duration-300 dev-mode:rounded-none dev-mode:border-2 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] dev-mode:hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send
+              {isSubmitting ? "Sending..." : "Send"}
             </Button>
           </form>
 

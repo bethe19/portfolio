@@ -12,10 +12,10 @@ export const Education = () => {
               Education
             </h2>
 
-            <div className="relative border border-border rounded-md p-8 bg-card">
+            <div className="relative border border-border rounded-md dev-mode:rounded-none p-8 bg-card dev-mode:border-2 dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:border-foreground/40 dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-[1.01]">
               {/* Binder rings */}
-              <div className="absolute -left-3 top-1/4 w-6 h-6 rounded-full border border-border bg-background" />
-              <div className="absolute -left-3 top-1/2 w-6 h-6 rounded-full border border-border bg-background" />
+              <div className="absolute -left-3 top-1/4 w-6 h-6 rounded-full dev-mode:rounded-none border border-border bg-background dev-mode:border-2" />
+              <div className="absolute -left-3 top-1/2 w-6 h-6 rounded-full dev-mode:rounded-none border border-border bg-background dev-mode:border-2" />
               
               <h3 className="text-xl font-semibold mb-2">
                 Addis Ababa Institute of Technology (AAiT) B.Sc. in Software Engineering
@@ -37,10 +37,10 @@ export const Education = () => {
               Experience
             </h2>
 
-            <div className="relative border border-border rounded-md p-8 bg-card space-y-6">
+            <div className="relative border border-border rounded-md dev-mode:rounded-none p-8 bg-card space-y-6 dev-mode:border-2 dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:border-foreground/40 dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-[1.01]">
               {/* Binder rings */}
-              <div className="absolute -left-3 top-1/4 w-6 h-6 rounded-full border border-border bg-background" />
-              <div className="absolute -left-3 top-1/2 w-6 h-6 rounded-full border border-border bg-background" />
+              <div className="absolute -left-3 top-1/4 w-6 h-6 rounded-full dev-mode:rounded-none border border-border bg-background dev-mode:border-2" />
+              <div className="absolute -left-3 top-1/2 w-6 h-6 rounded-full dev-mode:rounded-none border border-border bg-background dev-mode:border-2" />
               
               <div>
                 <h3 className="text-xl font-semibold mb-2">

@@ -36,7 +36,7 @@ export const Header = () => {
     visible: (index: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.12 * index, duration: 0.35, ease: "easeOut" },
+      transition: { delay: 0.12 * index, duration: 0.35, ease: "easeOut" as const },
     }),
   };
 
@@ -92,8 +92,9 @@ export const Header = () => {
               size="icon"
               onClick={() => setIsDevMode(!isDevMode)}
               title="Toggle dev mode"
+              className={`transition-all duration-300 ${isDevMode ? 'bg-foreground/10 border-2 border-foreground/30 dev-mode:rounded-none' : ''}`}
             >
-              <Terminal className="h-5 w-5" />
+              <Terminal className={`h-5 w-5 transition-all duration-300 ${isDevMode ? 'text-foreground' : ''}`} />
             </Button>
 
             {/* Mobile Navigation */}

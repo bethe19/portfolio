@@ -221,4 +221,122 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 );
 CarouselNext.displayName = "CarouselNext";
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+const CarouselDots = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const { api } = useCarousel();
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
+
+    React.useEffect(() => {
+      if (!api) return;
+
+      const onSelect = () => {
+        setSelectedIndex(api.selectedScrollSnap());
+      };
+
+      const onReInit = () => {
+        setScrollSnaps(api.scrollSnapList());
+        onSelect();
+      };
+
+      setScrollSnaps(api.scrollSnapList());
+      onSelect();
+
+      api.on("select", onSelect);
+      api.on("reInit", onReInit);
+
+      return () => {
+        api.off("select", onSelect);
+        api.off("reInit", onReInit);
+      };
+    }, [api]);
+
+    const scrollTo = (index: number) => {
+      api?.scrollTo(index);
+    };
+
+    return (
+      <div ref={ref} className={cn("flex justify-center gap-2", className)} {...props}>
+        {scrollSnaps.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={cn(
+              "h-2.5 w-2.5 rounded-full transition-all dev-mode:rounded-none dev-mode:w-8 dev-mode:border-2 dev-mode:border-foreground/20",
+              index === selectedIndex ? "bg-primary scale-110 dev-mode:border-primary" : "bg-muted opacity-40 hover:opacity-60 dev-mode:hover:border-foreground/40"
+            )}
+            onClick={() => scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    );
+  },
+);
+CarouselDots.displayName = "CarouselDots";
+
+const CarouselWithAutoplay = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & CarouselProps & { autoplayInterval?: number }
+>(({ autoplayInterval = 5000, opts, ...props }, ref) => {
+  const [api, setApi] = React.useState<CarouselApi>();
+
+  React.useEffect(() => {
+    if (!api) return;
+
+    let intervalId: number | null = null;
+
+    const scrollNext = () => {
+      if (!api) return;
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
+    };
+
+    const startAutoplay = () => {
+      if (intervalId) window.clearInterval(intervalId);
+      intervalId = window.setInterval(scrollNext, autoplayInterval);
+    };
+
+    const stopAutoplay = () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    startAutoplay();
+
+    api.on("pointerDown", stopAutoplay);
+    api.on("pointerUp", startAutoplay);
+
+    return () => {
+      stopAutoplay();
+      api.off?.("pointerDown", stopAutoplay);
+      api.off?.("pointerUp", startAutoplay);
+    };
+  }, [api, autoplayInterval]);
+
+  return (
+    <Carousel
+      ref={ref}
+      opts={{ loop: true, ...opts }}
+      setApi={setApi}
+      {...props}
+    />
+  );
+});
+CarouselWithAutoplay.displayName = "CarouselWithAutoplay";
+
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  CarouselDots,
+  CarouselWithAutoplay,
+};
