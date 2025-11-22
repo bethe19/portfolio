@@ -2,7 +2,7 @@ import { GraduationCap, Briefcase } from "lucide-react";
 
 export const Education = () => {
   return (
-    <section className="py-20">
+    <section className="py-6">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Education */}

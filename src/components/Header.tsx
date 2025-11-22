@@ -3,25 +3,89 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import darkLogo from "../../images/dark logo.png";
+import lightLogo from "../../images/light logo.png";
 
 const navItems = [
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
+
+const THEME_STORAGE_KEY = "bethe-theme-preference";
 
 export const Header = () => {
   const [isDark, setIsDark] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isManualOverride, setIsManualOverride] = useState(false);
 
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme !== null) {
+      const savedIsDark = savedTheme === "dark";
+      setIsDark(savedIsDark);
+      setIsManualOverride(true);
+      if (savedIsDark) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+    } else {
+      // If no saved preference, detect system theme
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const systemIsDark = mediaQuery.matches;
+      setIsDark(systemIsDark);
+      if (systemIsDark) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+    }
+  }, []);
+
+  // Detect system theme preference changes (only if no manual override)
+  useEffect(() => {
+    if (isManualOverride) return;
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateTheme = (e: MediaQueryList | MediaQueryListEvent) => {
+      setIsDark(e.matches);
+      if (e.matches) {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+    };
+
+    // Listen for system theme changes
+    mediaQuery.addEventListener("change", updateTheme);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateTheme);
+    };
+  }, [isManualOverride]);
+
+  // Update theme when isDark changes and save to localStorage
   useEffect(() => {
     if (isDark) {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
     }
-  }, [isDark]);
+
+    // Save to localStorage if manually overridden
+    if (isManualOverride) {
+      localStorage.setItem(THEME_STORAGE_KEY, isDark ? "dark" : "light");
+    }
+  }, [isDark, isManualOverride]);
+
+  const handleThemeToggle = () => {
+    setIsManualOverride(true);
+    setIsDark(!isDark);
+  };
 
   useEffect(() => {
     if (isDevMode) {
@@ -45,12 +109,16 @@ export const Header = () => {
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <motion.a
           href="#"
-          className="text-xl font-bold hover:opacity-70 transition-opacity"
+          className="flex items-center hover:opacity-70 transition-opacity"
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          Bethe Bayou
+          <img
+            src={isDark ? darkLogo : lightLogo}
+            alt="Logo"
+            className="h-10 w-10 object-contain"
+          />
         </motion.a>
 
         <div className="flex items-center gap-4">
@@ -81,7 +149,7 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsDark(!isDark)}
+              onClick={handleThemeToggle}
               title={isDark ? "Light mode" : "Dark mode"}
             >
               {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

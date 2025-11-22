@@ -15,35 +15,40 @@ const skills = [
   { name: "NumPy", icon: "https://cdn.simpleicons.org/numpy/000000" },
 ];
 
+const SkillCard = ({ skill, index }: { skill: { name: string; icon: string }; index: number }) => (
+  <div
+    key={skill.name}
+    className="group relative border border-border rounded-lg dev-mode:rounded-none p-6 bg-card flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:scale-105 dev-mode:border-2 dev-mode:hover:border-foreground/40 animate-slide-up"
+    style={{ animationDelay: `${index * 50}ms` }}
+  >
+    {skill.icon.startsWith("fab ") ? (
+      <i className={`${skill.icon} text-2xl transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12`}></i>
+    ) : (
+      <img
+        src={skill.icon}
+        alt={skill.name}
+        loading="lazy"
+        className="w-8 h-8 transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12 dark:invert"
+      />
+    )}
+    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-card border border-border px-3 py-1 rounded-lg dev-mode:rounded-none text-xs font-medium whitespace-nowrap dev-mode:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:border-2">
+      {skill.name}
+    </span>
+  </div>
+);
+
 export const Skills = () => {
   return (
-    <section className="py-20">
+    <section id="skills" className="py-6">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-medium mb-12 text-center uppercase tracking-wider">
+          <h2 className="text-2xl font-medium mb-8 text-center uppercase tracking-wider">
             My Skills
           </h2>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6">
             {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="group relative border border-border rounded-lg dev-mode:rounded-none p-6 bg-card flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:scale-105 dev-mode:border-2 dev-mode:hover:border-foreground/40 animate-slide-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {skill.icon.startsWith("fab ") ? (
-                  <i className={`${skill.icon} text-2xl transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12`}></i>
-                ) : (
-                  <img
-                    src={skill.icon}
-                    alt={skill.name}
-                    className="w-8 h-8 transition-transform group-hover:scale-110 dev-mode:group-hover:scale-125 dev-mode:group-hover:rotate-12 dark:invert"
-                  />
-                )}
-                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-card border border-border px-3 py-1 rounded-lg dev-mode:rounded-none text-xs font-medium whitespace-nowrap dev-mode:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:border-2">
-                  {skill.name}
-                </span>
-              </div>
+              <SkillCard key={skill.name} skill={skill} index={index} />
             ))}
           </div>
         </div>

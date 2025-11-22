@@ -90,15 +90,12 @@ const featuredProjects: Project[] = [
 
 export const Projects = () => {
   return (
-    <section id="projects" className="py-16 px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Featured Projects
+        <div className="text-center mb-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+            Projects
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore our latest creations where innovation meets timeless design.
-          </p>
         </div>
 
         <CarouselWithAutoplay className="w-full max-w-6xl mx-auto" autoplayInterval={5000}>
@@ -115,6 +112,7 @@ export const Projects = () => {
                         <img
                           src={project.image}
                           alt={project.title}
+                          loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 dev-mode:group-hover:scale-[1.08] dev-mode:group-hover:translate-y-[-2%]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dev-mode:opacity-0" />
