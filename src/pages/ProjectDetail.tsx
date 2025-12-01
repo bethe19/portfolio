@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Github, ExternalLink, ArrowLeft, Code2, FileCode, Database, Brain, Atom, Palette, Server } from "lucide-react";
 import { useEffect } from "react";
+import fintrack1 from "../../images/fintrackimgs/1.png";
+import fintrack2 from "../../images/fintrackimgs/2.png";
+import fintrack3 from "../../images/fintrackimgs/3.png";
+import fintrackAdmin from "../../images/fintrackimgs/admin.png";
+import fintrackAdmin2 from "../../images/fintrackimgs/admin2.png";
 
 // Project details data
 const projectDetails: Record<string, {
@@ -41,11 +46,11 @@ const projectDetails: Record<string, {
       "Creating responsive and accessible UI components"
     ],
     images: [
-      "../../images/fintrackimgs/1.png",
-      "../../images/fintrackimgs/2.png",
-      "../../images/fintrackimgs/3.png",
-      "../../images/fintrackimgs/admin.png",
-      "../../images/fintrackimgs/admin2.png"
+      fintrack1,
+      fintrack2,
+      fintrack3,
+      fintrackAdmin,
+      fintrackAdmin2
     ],
     imageDescriptions: [
       "Dashboard Overview",
