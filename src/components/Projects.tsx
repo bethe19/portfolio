@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Code2, FileCode, Database, Zap, Brain, Atom, Palette, Server } from "lucide-react";
+import { Github, ExternalLink, Code2, FileCode, Database, Zap, Brain, Atom, Palette, Server, Info } from "lucide-react";
 import { CarouselWithAutoplay, CarouselContent, CarouselItem, CarouselDots } from "@/components/ui/carousel";
+import { Link } from "react-router-dom";
+import fintrackImage from "../../images/fintrackimgs/1.png";
 import moodieImage from "../../images/Screenshot 2025-11-09 182951.png";
 import notieImage from "../../images/image.png";
 import scoutaiImage from "../../images/1.webp";
@@ -12,6 +14,12 @@ type TechStack = {
 };
 
 const techStacks: Record<string, TechStack[]> = {
+  fintrack: [
+    { name: "React", icon: <Atom className="w-4 h-4" /> },
+    { name: "TypeScript", icon: <Code2 className="w-4 h-4" /> },
+    { name: "Node.js", icon: <Server className="w-4 h-4" /> },
+    { name: "Database", icon: <Database className="w-4 h-4" /> },
+  ],
   moodie: [
     { name: "React", icon: <Atom className="w-4 h-4" /> },
     { name: "Tailwind CSS", icon: <Palette className="w-4 h-4" /> },
@@ -46,9 +54,20 @@ interface Project {
   github: string;
   live: string;
   inProgress?: boolean;
+  detail?: boolean;
 }
 
-const featuredProjects: Project[] = [
+export const featuredProjects: Project[] = [
+  {
+    id: "fintrack",
+    title: "FinTrack – Personal Finance Manager",
+    description: "A comprehensive finance tracking application to manage expenses, income, and budgets. Features real-time analytics and financial insights.",
+    image: fintrackImage,
+    techStack: techStacks.fintrack,
+    github: "https://github.com/bethe19/fintrack",
+    live: "https://fin-track-eth.vercel.app",
+    detail: true,
+  },
   {
     id: "moodie",
     title: "Moodie – Mood-Based Movie Discovery",
@@ -147,30 +166,45 @@ export const Projects = () => {
                     </div>
 
                     {/* GitHub and Live Links */}
-                    <div className="flex flex-wrap gap-2 mt-auto">
+                    <div className="flex flex-wrap gap-2 mt-auto justify-between items-end">
                       {!project.inProgress ? (
                         <>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-border hover:bg-foreground hover:text-background text-xs dev-mode:border-2 dev-mode:border-foreground/20 dev-mode:hover:border-foreground dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:-translate-y-0.5"
-                            asChild
-                          >
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                              <Github className="w-3.5 h-3.5 mr-1.5 dev-mode:transition-transform dev-mode:duration-300 dev-mode:group-hover:rotate-12" />
-                              GitHub
-                            </a>
-                          </Button>
-                          <Button
-                            size="sm"
-                            className="bg-foreground text-background hover:bg-foreground/90 text-xs dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] dev-mode:hover:-translate-y-0.5"
-                            asChild
-                          >
-                            <a href={project.live} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                              <ExternalLink className="w-3.5 h-3.5 mr-1.5 dev-mode:transition-transform dev-mode:duration-300 dev-mode:group-hover:rotate-12" />
-                              Live Preview
-                            </a>
-                          </Button>
+                          <div className="flex flex-wrap gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-border hover:bg-foreground hover:text-background text-xs dev-mode:border-2 dev-mode:border-foreground/20 dev-mode:hover:border-foreground dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:-translate-y-0.5"
+                              asChild
+                            >
+                              <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                                <Github className="w-3.5 h-3.5 mr-1.5 dev-mode:transition-transform dev-mode:duration-300 dev-mode:group-hover:rotate-12" />
+                                GitHub
+                              </a>
+                            </Button>
+                            <Button
+                              size="sm"
+                              className="bg-foreground text-background hover:bg-foreground/90 text-xs dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] dev-mode:hover:-translate-y-0.5"
+                              asChild
+                            >
+                              <a href={project.live} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                                <ExternalLink className="w-3.5 h-3.5 mr-1.5 dev-mode:transition-transform dev-mode:duration-300 dev-mode:group-hover:rotate-12" />
+                                Live Preview
+                              </a>
+                            </Button>
+                          </div>
+                          {project.detail && (
+                            <Button
+                              size="sm"
+                              variant="default"
+                              className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] dev-mode:hover:-translate-y-0.5"
+                              asChild
+                            >
+                              <Link to={`/project/${project.id}`} onClick={(e) => e.stopPropagation()}>
+                                <Info className="w-3.5 h-3.5 mr-1.5 dev-mode:transition-transform dev-mode:duration-300 dev-mode:group-hover:rotate-12" />
+                                Details
+                              </Link>
+                            </Button>
+                          )}
                         </>
                       ) : (
                         <Button size="sm" variant="secondary" disabled className="text-xs dev-mode:border-2 dev-mode:border-foreground/10">
