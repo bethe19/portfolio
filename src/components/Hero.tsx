@@ -76,7 +76,7 @@ export const Hero = () => {
                     className="bg-background text-foreground hover:bg-foreground hover:text-background border border-border transition-all duration-300 dev-mode:rounded-none dev-mode:border-2 dev-mode:hover:scale-105 dev-mode:hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:-translate-y-0.5"
                     asChild
                   >
-                    <a href="https://drive.google.com/file/d/1vaYTPM0yCS-HPQ5FDMcsVEMQvZBg-j2o/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                    <a href="https://drive.google.com/file/d/1G6Oy6_xe8ISf73onA3d1STxED3fLGX0m/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                       Resume
                     </a>
                   </Button>

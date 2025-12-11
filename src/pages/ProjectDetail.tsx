@@ -9,6 +9,9 @@ import fintrack2 from "../../images/fintrackimgs/2.png";
 import fintrack3 from "../../images/fintrackimgs/3.png";
 import fintrackAdmin from "../../images/fintrackimgs/admin.png";
 import fintrackAdmin2 from "../../images/fintrackimgs/admin2.png";
+import nextstopArchitecture from "../../images/nextstop/nextstop-architecture.png";
+import nextstopMain from "../../images/nextstop/nextstop.png";
+import nextstopPhoto from "../../images/nextstop/photo_2025-12-11_15-22-41.jpg";
 
 // Project details data
 const projectDetails: Record<string, {
@@ -58,6 +61,68 @@ const projectDetails: Record<string, {
       "Budget Management",
       "Admin Dashboard",
       "User Management Panel"
+    ]
+  },
+  nextstop: {
+    fullDescription: "NextStop is a comprehensive RESTful API backend for a tour booking platform focused on African destinations, particularly Ethiopia. Built with Node.js, Express, and MongoDB, this backend implements a robust 3-tier architecture following MVC patterns. The API features JWT-based authentication with role-based access control (5 user roles), Stripe payment integration, advanced security layers, and comprehensive CRUD operations for tours, bookings, reviews, and user management. The system includes email services, image processing, geospatial queries, and analytics dashboards.",
+    features: [
+      "RESTful API with 50+ endpoints across 8 resource categories",
+      "JWT authentication with 5 role-based access levels (user, guide, lead-guide, admin, superadmin)",
+      "Stripe payment integration with checkout sessions and webhook handling",
+      "Advanced security: Helmet, CORS, rate limiting, NoSQL injection prevention, XSS protection",
+      "MongoDB with Mongoose ODM - 8 core models with relationships and indexes",
+      "Email service with Nodemailer for password reset and notifications",
+      "Image processing with Sharp and Multer for tour and user photos",
+      "Geospatial queries for tour location-based searches",
+      "Advanced filtering, sorting, pagination, and field selection",
+      "View tracking and analytics for tour popularity",
+      "Favorites/wishlist functionality",
+      "Review and rating system with duplicate prevention",
+      "Dashboard endpoints for user and admin statistics",
+      "Singleton models for company info and discover page content",
+      "Error handling with custom error classes and global error handler",
+      "API features utility for query building and data transformation"
+    ],
+    challenges: [
+      "Implementing secure JWT authentication with token refresh and password reset flows",
+      "Designing role-based authorization middleware for 5 different user roles",
+      "Integrating Stripe webhooks securely with raw body parsing before JSON middleware",
+      "Building advanced query features (filtering, sorting, pagination) with MongoDB",
+      "Handling geospatial data and queries for tour locations",
+      "Implementing comprehensive security layers without impacting performance",
+      "Creating reusable handler factory pattern for CRUD operations",
+      "Managing complex relationships between 8 database models",
+      "Optimizing image upload and processing pipeline with Sharp",
+      "Building singleton models (Company, Discover) with proper validation",
+      "Implementing view tracking without impacting performance",
+      "Creating flexible API that supports multiple frontend clients"
+    ],
+    learnings: [
+      "Building production-ready RESTful APIs with Express.js",
+      "MongoDB schema design with Mongoose, including virtuals and indexes",
+      "JWT authentication and authorization patterns",
+      "Stripe payment integration and webhook security",
+      "Security best practices: Helmet, CORS, rate limiting, sanitization",
+      "Error handling patterns and custom error classes",
+      "Middleware architecture and request/response flow",
+      "Geospatial queries with MongoDB 2dsphere indexes",
+      "Image processing and optimization with Sharp",
+      "Email service integration with Nodemailer",
+      "Factory pattern for reusable CRUD operations",
+      "API design principles: filtering, pagination, field selection",
+      "MVC architecture in Node.js applications",
+      "Environment variable management and configuration",
+      "Testing APIs with Postman collections"
+    ],
+    images: [
+      nextstopMain,
+      nextstopArchitecture,
+      nextstopPhoto
+    ],
+    imageDescriptions: [
+      "NextStop Application Overview",
+      "System Architecture Diagram - 3-tier architecture showing Presentation, Application, and Data layers",
+      "Auth interface frontend"
     ]
   }
 };

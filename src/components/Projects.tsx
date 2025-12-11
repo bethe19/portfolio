@@ -7,6 +7,7 @@ import moodieImage from "../../images/Screenshot 2025-11-09 182951.png";
 import notieImage from "../../images/image.png";
 import scoutaiImage from "../../images/1.webp";
 import checkmateImage from "../../images/photo_2025-11-20_11-44-04.jpg";
+import nextstopImage from "../../images/nextstop/nextstop.png";
 
 type TechStack = {
   name: string;
@@ -42,6 +43,13 @@ const techStacks: Record<string, TechStack[]> = {
     { name: "Node.js", icon: <Server className="w-4 h-4" /> },
     { name: "JavaScript", icon: <Code2 className="w-4 h-4" /> },
     { name: "Database", icon: <Database className="w-4 h-4" /> },
+  ],
+  nextstop: [
+    { name: "Node.js", icon: <Server className="w-4 h-4" /> },
+    { name: "Express.js", icon: <Server className="w-4 h-4" /> },
+    { name: "MongoDB", icon: <Database className="w-4 h-4" /> },
+    { name: "JWT", icon: <Zap className="w-4 h-4" /> },
+    { name: "Stripe", icon: <Zap className="w-4 h-4" /> },
   ],
 };
 
@@ -104,6 +112,16 @@ export const featuredProjects: Project[] = [
     github: "#",
     live: "#",
     inProgress: true,
+  },
+  {
+    id: "nextstop",
+    title: "NextStop – Tour Booking Backend API",
+    description: "A comprehensive RESTful API backend for a tour booking platform. Built with Node.js, Express, and MongoDB, featuring JWT authentication, Stripe payments, and role-based access control.",
+    image: nextstopImage,
+    techStack: techStacks.nextstop,
+    github: "https://github.com/bethe19/next-stop",
+    live: "#",
+    detail: true,
   },
 ];
 
