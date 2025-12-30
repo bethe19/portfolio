@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Code2, FileCode, Database, Zap, Brain, Atom, Palette, Server, Info } from "lucide-react";
+import { Github, ExternalLink, Code2, FileCode, Database, Zap, Brain, Atom, Palette, Server, Info, Terminal, Folder, GitBranch } from "lucide-react";
 import { CarouselWithAutoplay, CarouselContent, CarouselItem, CarouselDots } from "@/components/ui/carousel";
 import { Link } from "react-router-dom";
+import { useDevMode } from "@/hooks/useDevMode";
+import { useState } from "react";
 import fintrackImage from "../../images/fintrackimgs/1.png";
 import moodieImage from "../../images/Screenshot 2025-11-09 182951.png";
 import notieImage from "../../images/image.png";
@@ -126,16 +128,24 @@ export const featuredProjects: Project[] = [
 ];
 
 export const Projects = () => {
-  return (
-    <section id="projects" className="py-6 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
-            Projects
-          </h2>
-        </div>
+  const isDevMode = useDevMode();
+  const [selectedProject, setSelectedProject] = useState(0);
 
-        <CarouselWithAutoplay className="w-full max-w-6xl mx-auto" autoplayInterval={5000}>
+  // Normal Mode: Carousel layout
+  if (!isDevMode) {
+    return (
+      <section id="projects" className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-foreground mb-2 uppercase tracking-wider">
+              Featured Projects
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Showcase of my latest work and development
+            </p>
+          </div>
+
+          <CarouselWithAutoplay className="w-full max-w-6xl mx-auto" autoplayInterval={5000}>
           <CarouselContent className="-ml-4">
             {featuredProjects.map((project) => (
               <CarouselItem
@@ -241,6 +251,170 @@ export const Projects = () => {
 
           <CarouselDots className="mt-8" />
         </CarouselWithAutoplay>
+      </div>
+    </section>
+    );
+  }
+
+  // Dev Mode: File browser/terminal style
+  return (
+    <section id="projects" className="py-6 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto">
+        {/* Terminal Header */}
+        <div className="mb-4 border-2 border-foreground/20 p-3 bg-background max-w-6xl mx-auto">
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <Terminal className="w-4 h-4" />
+            <span className="text-muted-foreground">$</span>
+            <span>ls projects/ --details</span>
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="border-2 border-foreground/30 overflow-hidden bg-background">
+            {/* File Browser Header */}
+            <div className="bg-foreground/10 px-4 py-3 border-b-2 border-foreground/20 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Folder className="w-4 h-4" />
+                <span className="text-xs font-mono">PROJECTS DIRECTORY</span>
+              </div>
+              <div className="text-xs font-mono text-green-500">
+                {featuredProjects.length} projects found
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 p-4">
+              {/* Project List */}
+              <div className="space-y-2">
+                <div className="text-xs font-mono text-muted-foreground mb-2">[PROJECTS]</div>
+                {featuredProjects.map((project, index) => (
+                  <button
+                    key={project.id}
+                    onClick={() => setSelectedProject(index)}
+                    className={`w-full text-left p-3 border-2 transition-all font-mono text-xs ${
+                      selectedProject === index
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-background border-foreground/20 hover:border-foreground/40"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <Folder className="w-3 h-3" />
+                      <span className="font-bold">{project.id}/</span>
+                      {project.inProgress && (
+                        <span className="text-yellow-500">[IN PROGRESS]</span>
+                      )}
+                    </div>
+                    <div className="text-muted-foreground ml-5 truncate">
+                      {project.title}
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Project Details */}
+              <div className="border-2 border-foreground/20 p-4 bg-background">
+                <div className="text-xs font-mono text-muted-foreground mb-3">[DETAILS]</div>
+                {featuredProjects[selectedProject] && (() => {
+                  const project = featuredProjects[selectedProject];
+                  return (
+                    <div className="space-y-4">
+                      {/* Project Image */}
+                      {project.image && (
+                        <div className="border-2 border-foreground/20">
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-48 object-cover"
+                          />
+                        </div>
+                      )}
+
+                      {/* Project Info */}
+                      <div>
+                        <h3 className="text-lg font-bold font-mono mb-2">{project.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
+                      </div>
+
+                      {/* Tech Stack */}
+                      <div>
+                        <div className="text-xs font-mono text-muted-foreground mb-2">[TECH STACK]</div>
+                        <div className="flex flex-wrap gap-2">
+                          {project.techStack.map((tech, idx) => (
+                            <div
+                              key={idx}
+                              className="px-2 py-1 border-2 border-foreground/20 bg-background text-xs font-mono"
+                            >
+                              {tech.icon}
+                              <span className="ml-1">{tech.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div>
+                        <div className="text-xs font-mono text-muted-foreground mb-2">[ACTIONS]</div>
+                        <div className="flex flex-wrap gap-2">
+                          {!project.inProgress ? (
+                            <>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="border-2 border-foreground/20 hover:border-foreground hover:bg-foreground hover:text-background text-xs font-mono"
+                                asChild
+                              >
+                                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                  <GitBranch className="w-3 h-3 mr-1" />
+                                  GIT
+                                </a>
+                              </Button>
+                              <Button
+                                size="sm"
+                                className="bg-foreground text-background hover:opacity-90 text-xs font-mono"
+                                asChild
+                              >
+                                <a href={project.live} target="_blank" rel="noopener noreferrer">
+                                  <ExternalLink className="w-3 h-3 mr-1" />
+                                  LIVE
+                                </a>
+                              </Button>
+                              {project.detail && (
+                                <Button
+                                  size="sm"
+                                  variant="default"
+                                  className="text-xs font-mono"
+                                  asChild
+                                >
+                                  <Link to={`/project/${project.id}`}>
+                                    <Info className="w-3 h-3 mr-1" />
+                                    INFO
+                                  </Link>
+                                </Button>
+                              )}
+                            </>
+                          ) : (
+                            <div className="px-3 py-1 border-2 border-yellow-500/50 bg-yellow-500/10 text-xs font-mono text-yellow-500">
+                              IN PROGRESS
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-foreground/5 px-4 py-2 border-t-2 border-foreground/10 flex items-center justify-between text-xs font-mono">
+              <div className="text-muted-foreground">
+                Selected: {featuredProjects[selectedProject]?.id || 'none'}
+              </div>
+              <div className="text-muted-foreground">
+                Status: ACTIVE
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

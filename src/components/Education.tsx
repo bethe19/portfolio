@@ -7,10 +7,15 @@ export const Education = () => {
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Education */}
           <div className="space-y-6 animate-slide-up">
-            <h2 className="text-2xl font-medium flex items-center gap-3 uppercase tracking-wider">
-              <GraduationCap className="w-6 h-6" />
-              Education
-            </h2>
+            <div>
+              <h2 className="text-2xl font-bold flex items-center gap-3 uppercase tracking-wider mb-2">
+                <GraduationCap className="w-6 h-6" />
+                Education
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Academic background and qualifications
+              </p>
+            </div>
 
             <div className="relative border border-border rounded-md dev-mode:rounded-none p-8 bg-card dev-mode:border-2 dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:border-foreground/40 dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-[1.01]">
               {/* Binder rings */}
@@ -32,10 +37,15 @@ export const Education = () => {
 
           {/* Experience */}
           <div className="space-y-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
-            <h2 className="text-2xl font-medium flex items-center gap-3 uppercase tracking-wider">
-              <Briefcase className="w-6 h-6" />
-              Experience
-            </h2>
+            <div>
+              <h2 className="text-2xl font-bold flex items-center gap-3 uppercase tracking-wider mb-2">
+                <Briefcase className="w-6 h-6" />
+                Experience
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Professional work and contributions
+              </p>
+            </div>
 
             <div className="relative border border-border rounded-md dev-mode:rounded-none p-8 bg-card space-y-6 dev-mode:border-2 dev-mode:hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] dev-mode:hover:border-foreground/40 dev-mode:transition-all dev-mode:duration-300 dev-mode:hover:scale-[1.01]">
               {/* Binder rings */}
@@ -44,36 +54,21 @@ export const Education = () => {
               
               <div>
                 <h3 className="text-xl font-semibold mb-2">
-                  Open Source Contributor – Moodie Movie Site
+                  Full-Stack Developer
                 </h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  <strong>Role:</strong> Frontend Developer
+                  <strong>Role:</strong> Freelance Full-Stack Developer
                 </p>
                 <p className="text-sm text-muted-foreground mb-2">
-                  <strong>Technologies:</strong> HTML, CSS, JavaScript, Vercel
+                  <strong>Duration:</strong> 2024 – Present
                 </p>
                 <p className="text-sm text-muted-foreground mb-2">
-                  <strong>Project:</strong>{" "}
-                  <a 
-                    href="https://github.com/bethe19/moodie-movie-site" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
-                    Moodie Movie Site
-                  </a>
+                  <strong>Technologies:</strong> HTML, CSS, JavaScript, React, Node.js, Express, PostgreSQL, MongoDB, Vercel
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  <strong>Description:</strong> Developed interactive UI components, integrated APIs, 
-                  optimized responsiveness, and deployed the project live on{" "}
-                  <a 
-                    href="https://moodie-neon.vercel.app" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
-                    Vercel
-                  </a>.
+                  <strong>Description:</strong> Developing full-stack web applications for clients, building responsive user interfaces, 
+                  creating RESTful APIs, integrating third-party services, and deploying applications to production. 
+                  Specializing in modern web technologies and delivering scalable solutions.
                 </p>
               </div>
 

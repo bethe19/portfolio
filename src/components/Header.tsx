@@ -10,6 +10,7 @@ const navItems = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "GitHub", href: "#github-stats" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -95,6 +96,19 @@ export const Header = () => {
     }
   }, [isDevMode]);
 
+  const handleDevModeToggle = () => {
+    const newDevMode = !isDevMode;
+    setIsDevMode(newDevMode);
+    
+    // Scroll to Hero section when toggling dev mode
+    setTimeout(() => {
+      const heroSection = document.getElementById('about');
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   const navItemVariants = {
     hidden: { opacity: 0, y: 12 },
     visible: (index: number) => ({
@@ -158,7 +172,7 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsDevMode(!isDevMode)}
+              onClick={handleDevModeToggle}
               title="Toggle dev mode"
               className={`transition-all duration-300 ${isDevMode ? 'bg-foreground/10 border-2 border-foreground/30 dev-mode:rounded-none' : ''}`}
             >

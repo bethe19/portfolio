@@ -78,7 +78,7 @@ All colors MUST be HSL.
   }
 
   .dev-mode {
-    font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+    font-family: 'Space Mono', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
     --background: 0 0% 100%;
     --foreground: 0 0% 7%;
     --border: 0 0% 80%;

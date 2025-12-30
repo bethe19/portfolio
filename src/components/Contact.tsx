@@ -105,14 +105,19 @@ export const Contact = () => {
   };
 
   return (
-    <footer id="contact" className="py-6 bg-card border-t border-border">
+    <footer id="contact" className="py-8 bg-card border-t border-border">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-medium mb-6 text-center uppercase tracking-wider">
-            Contact Me
-          </h2>
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold mb-2 uppercase tracking-wider">
+              Get In Touch
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Let's discuss your next project
+            </p>
+          </div>
 
-          <div className="space-y-4 mb-6 text-center text-sm">
+          <div className="space-y-3 mb-6 text-center text-sm">
             <p>
               Email:{" "}
               <a href="mailto:bethebayou@gmail.com" className="hover:underline">
