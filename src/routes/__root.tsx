@@ -4,8 +4,6 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -69,71 +67,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bethe Bayou — Software Engineer" },
-      {
-        name: "description",
-        content:
-          "Bethe Bayou — full-stack software engineer & AI research intern based in Addis Ababa.",
-      },
-      { name: "author", content: "Bethe Bayou" },
-      { property: "og:title", content: "Bethe Bayou — Software Engineer" },
-      { property: "og:description", content: "Full-stack engineer & AI research intern building products with React, Node.js and Python." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://bethebayou.vercel.com" },
-      { property: "og:image", content: "/assets/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/assets/og-image.png" },
-      { name: "google-site-verification", content: "dJeMmBSF_G3w7KT2-qCkhnHMBKVEsP2z4ncbQEk7wF0" },
-      { name: "keywords", content: "Bethe Bayou, Software Engineer, AAiT, Java, C++, Python, JavaScript, AI, UI/UX, Web Development, Portfolio" },
-    ],
-    links: [
-      { rel: "canonical", href: "https://bethebayou.vercel.com" },
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
-      },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-const themeInit = `(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
-
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
