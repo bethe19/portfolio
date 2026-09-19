@@ -1,0 +1,9 @@
+# Crawlers welcome
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bethebayou.vercel.app/sitemap.xml
+
+# Host
+Host: https://bethebayou.vercel.app
