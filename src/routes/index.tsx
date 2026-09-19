@@ -257,30 +257,38 @@ function Home() {
     <main className="flex min-h-screen w-full flex-col lg:flex-row">
       {/* ════════════ LEFT PANEL ════════════ */}
       <div className="panel-scroll w-full p-6 sm:p-10 lg:h-screen lg:w-[58%] lg:overflow-y-auto lg:p-14">
-        {/* Status Bar */}
-        <div className="flex items-center justify-between">
-          <span className="glass-chip inline-flex items-center gap-2 rounded-full border border-black/[0.06] px-3 py-1.5 text-xs font-medium text-foreground/90">
-            <span className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500" />
-            Available for opportunities
-          </span>
+        {/* Top Header: Avatar with Online Indicator & ThemeToggle */}
+        <div className="flex items-start justify-between">
+          <div className="relative inline-block">
+            <img
+              src={bethe}
+              alt="Bethe Bayou"
+              className="h-20 w-20 rounded-full object-cover ring-2 ring-border shadow-sm"
+            />
+            <span
+              className="absolute bottom-0.5 right-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-background ring-2 ring-background shadow-xs"
+              title="Online · Available for opportunities"
+              aria-label="Online · Available for opportunities"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="status-dot absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+              </span>
+            </span>
+          </div>
           <ThemeToggle />
         </div>
 
         {/* Hero */}
-        <section className="mt-10">
-          <img
-            src={bethe}
-            alt="Bethe Bayou"
-            className="h-20 w-20 rounded-full object-cover ring-2 ring-border shadow-sm"
-          />
-          <h1 className="mt-5 text-2xl font-semibold tracking-tight sm:text-3xl">
+        <section className="mt-5">
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Bethe Bayou
           </h1>
           <p className="mt-1 text-sm font-medium text-muted-foreground">
             Backend & Systems Engineer · Go, Distributed Systems & Scalable APIs
           </p>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Building scalable backend systems and distributed services.
+          <p className="mt-2 text-base text-muted-foreground">
+            Building scalable distributed systems.
           </p>
         </section>
 
