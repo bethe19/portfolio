@@ -6,6 +6,7 @@ export type Project = {
   year: string;
   github: string;
   live?: string;
+  logo?: string;
   about: string[];
   highlights: string[];
   tech: string[];
@@ -110,6 +111,71 @@ export const projects: Project[] = [
         "Payment Service consumes event, processes payment",
         "On payment success → Notification Service sends confirmation",
         "On payment failure → Saga compensation triggers stock rollback via gRPC",
+      ],
+    },
+  },
+  {
+    slug: "goom-crm",
+    name: "Goom CRM",
+    logo: "/goom-crm-logo.svg",
+    tagline:
+      "A fast, focused CRM for small sales teams: a visual pipeline, contacts, companies, activities, tasks, forecasting, and reports.",
+    stack: "React · TypeScript · Vite · Supabase",
+    year: "2026",
+    github: "https://github.com/bethe19/goom-crm",
+    live: "https://goom-crm.vercel.app",
+    about: [
+      "Goom is a fast, focused CRM tailored for small sales teams. It provides a visual Kanban pipeline, robust contact and company management, activity tracking, forecasting, and detailed reports in team workspaces with role-based access control.",
+      "It features an integrated AI assistant that runs securely through rate-limited Edge Functions to answer pipeline questions and draft follow-ups without exposing API keys to the browser.",
+    ],
+    highlights: [
+      "Drag-and-drop Kanban pipeline with optimistic updates and undo capability",
+      "Comprehensive contact, company, and activity management with bulk actions",
+      "Real-time dashboards for forecasting, win rates, and sales cycle reporting",
+      "Secure AI assistant running on Supabase Edge Functions for pipeline insights",
+      "Full CSV import/export wizards and team workspaces with strict Row Level Security",
+    ],
+    tech: ["React 18", "TypeScript", "Vite", "Supabase", "PostgreSQL", "Tailwind CSS"],
+    architecture: {
+      overview:
+        "Goom CRM is a modern Single Page Application built with React and Vite, backed by Supabase. It heavily leverages Supabase's PostgreSQL database for data storage, Auth for secure team workspaces, and Row Level Security (RLS) to enforce data isolation between different workspaces.",
+      decisions: [
+        {
+          title: "Supabase as Backend-as-a-Service",
+          detail:
+            "Supabase was chosen for its tightly integrated PostgreSQL database, authentication, and real-time capabilities. Row Level Security ensures that even with a shared database, users can only access their workspace's CRM data.",
+        },
+        {
+          title: "Edge Functions for AI Integration",
+          detail:
+            "The AI assistant relies on external provider APIs. By proxying these requests through Supabase Edge Functions, API keys remain securely on the server and usage can be rate-limited per user.",
+        },
+        {
+          title: "Optimistic UI Updates",
+          detail:
+            "For actions like moving a deal across the Kanban board, the UI updates instantly while the mutation happens asynchronously in the background. If the request fails, the state is rolled back, providing a highly responsive feel.",
+        },
+      ],
+      components: [
+        {
+          name: "Pipeline Kanban",
+          role: "Interactive drag-and-drop board for managing deal stages, probabilities, and totals",
+        },
+        {
+          name: "Insights Dashboard",
+          role: "Renders real-time KPIs, forecasts, and period-over-period sales reports",
+        },
+        {
+          name: "AI Assistant",
+          role: "Secure conversational interface grounded in the user's workspace data",
+        },
+      ],
+      dataFlow: [
+        "User logs into a specific workspace via Supabase Auth",
+        "React frontend queries Supabase PostgreSQL directly, filtered transparently by RLS",
+        "User drags a deal to a new stage → UI updates optimistically",
+        "Background mutation commits the stage change to the database",
+        "If user queries the AI, request routes through Supabase Edge Functions for secure API handling",
       ],
     },
   },

@@ -71,10 +71,10 @@ export const Route = createFileRoute("/")({
           "Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. AAiT student & A2SV trainee.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://bethebayou.vercel.app/" },
+      { property: "og:url", content: "https://bethebayou.me/" },
       {
         property: "og:image",
-        content: "https://bethebayou.vercel.app/og-image.png",
+        content: "https://bethebayou.me/og-image.png",
       },
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -89,7 +89,7 @@ export const Route = createFileRoute("/")({
       },
       {
         name: "twitter:image",
-        content: "https://bethebayou.vercel.app/og-image.png",
+        content: "https://bethebayou.me/og-image.png",
       },
     ],
   }),
@@ -308,7 +308,7 @@ function Home() {
         </section>
 
         {/* Bio Narrative */}
-        <section className="mt-8 space-y-3 text-[15px] leading-relaxed text-foreground/85">
+        <section id="about" className="mt-8 space-y-3 text-[15px] leading-relaxed text-foreground/85">
           <p>
             I'm a software engineer at{" "}
             <span className="font-semibold text-foreground">
@@ -468,7 +468,7 @@ function Home() {
       </div>
 
       {/* ════════════ RIGHT PANEL ════════════ */}
-      <div className="panel-scroll w-full border-t border-black/[0.06] p-6 sm:p-10 lg:h-screen lg:w-[42%] lg:overflow-y-auto lg:border-l lg:border-t-0 lg:p-12">
+      <div id="projects" className="panel-scroll w-full border-t border-black/[0.06] p-6 sm:p-10 lg:h-screen lg:w-[42%] lg:overflow-y-auto lg:border-l lg:border-t-0 lg:p-12">
         {/* Projects Header */}
         <div className="flex items-baseline justify-between">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -494,6 +494,13 @@ function Home() {
                     params={{ slug: p.slug }}
                     className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-foreground transition-colors hover:text-accent"
                   >
+                    {p.logo && (
+                      <img
+                        src={p.logo}
+                        alt={`${p.name} logo`}
+                        className="h-5 w-5 object-contain"
+                      />
+                    )}
                     {p.name}
                     <ExternalLink
                       size={13}

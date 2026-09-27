@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getProject, projects, type Project } from "@/lib/projects";
 import {
@@ -28,8 +28,8 @@ export const Route = createFileRoute("/projects/$slug")({
       ? `${p.tagline} Built with ${p.tech.join(", ")}. Architecture case study by Bethe Bayou.`
       : "Project case study by Bethe Bayou.";
     const url = p
-      ? `https://bethebayou.vercel.app/projects/${p.slug}`
-      : "https://bethebayou.vercel.app";
+      ? `https://bethebayou.me/projects/${p.slug}`
+      : "https://bethebayou.me";
     const keywords = p
       ? `${p.name}, ${p.tech.join(", ")}, Bethe Bayou, case study, backend project, ${p.stack}`
       : "Bethe Bayou, project";
@@ -44,14 +44,14 @@ export const Route = createFileRoute("/projects/$slug")({
         { property: "og:url", content: url },
         {
           property: "og:image",
-          content: "https://bethebayou.vercel.app/og-image.png",
+          content: "https://bethebayou.me/og-image.png",
         },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
         {
           name: "twitter:image",
-          content: "https://bethebayou.vercel.app/og-image.png",
+          content: "https://bethebayou.me/og-image.png",
         },
       ],
     };
@@ -116,9 +116,18 @@ function ProjectPage() {
             {project.stack}
           </span>
         </div>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-          {project.name}
-        </h1>
+        <div className="mt-4 flex items-center gap-3">
+          {project.logo && (
+            <img
+              src={project.logo}
+              alt={`${project.name} logo`}
+              className="h-8 w-8 object-contain"
+            />
+          )}
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            {project.name}
+          </h1>
+        </div>
         <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-muted-foreground">
           {project.tagline}
         </p>
