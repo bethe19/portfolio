@@ -41,58 +41,93 @@ import {
 import type { IconType } from "react-icons";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { projects } from "@/lib/projects";
+import { RESUME_URL, PROFILE, SITE_URL } from "@/lib/constants";
+import { getPersonJsonLd, getWebSiteJsonLd, getProfilePageJsonLd } from "@/lib/seo";
 import bethe from "@/assets/bethe.png";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      {
-        title:
-          "Bethe Bayou — Backend & Distributed Systems Engineer | Go, Python, TypeScript",
-      },
-      {
-        name: "description",
-        content:
-          "Bethe Bayou is a backend and distributed systems engineer building high-throughput microservices with Go, gRPC, Apache Kafka, and PostgreSQL. AAiT Software Engineering student & A2SV trainee in Addis Ababa, Ethiopia. Open to backend engineering roles.",
-      },
-      {
-        name: "keywords",
-        content:
-          "Bethe Bayou, Backend Engineer, Go Developer, Distributed Systems, Microservices, gRPC, Kafka, Python, TypeScript, AAiT, A2SV, Software Engineer Ethiopia, Addis Ababa",
-      },
-      {
-        property: "og:title",
-        content:
-          "Bethe Bayou — Backend & Distributed Systems Engineer",
-      },
-      {
-        property: "og:description",
-        content:
-          "Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. AAiT student & A2SV trainee.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://bethebayou.me/" },
-      {
-        property: "og:image",
-        content: "https://bethebayou.me/og-image.png",
-      },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:title",
-        content:
-          "Bethe Bayou — Backend & Distributed Systems Engineer",
-      },
-      {
-        name: "twitter:description",
-        content:
-          "Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL.",
-      },
-      {
-        name: "twitter:image",
-        content: "https://bethebayou.me/og-image.png",
-      },
-    ],
-  }),
+  head: () => {
+    const personLd = getPersonJsonLd();
+    const websiteLd = getWebSiteJsonLd();
+    const profilePageLd = getProfilePageJsonLd();
+    const projectsItemListLd = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Featured Engineering Case Studies",
+      itemListElement: projects.map((p, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        url: `${SITE_URL}/projects/${p.slug}`,
+        name: p.name,
+        description: p.tagline,
+      })),
+    };
+
+    const structuredData = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [personLd, websiteLd, profilePageLd, projectsItemListLd],
+    });
+
+    return {
+      meta: [
+        {
+          title: `${PROFILE.name} — Backend & Distributed Systems Engineer | ${PROFILE.university}`,
+        },
+        {
+          name: "description",
+          content: `${PROFILE.name} is a male backend and distributed systems engineer building high-throughput microservices with Go, gRPC, Apache Kafka, and PostgreSQL. ${PROFILE.degree} student at ${PROFILE.universityFull} & A2SV trainee in ${PROFILE.location}. Open to backend engineering roles.`,
+        },
+        {
+          name: "keywords",
+          content: `${PROFILE.name}, male software engineer, Addis Ababa University, AAiT, AAU Ethiopia, Backend Engineer, Go Developer, Distributed Systems, Microservices, gRPC, Kafka, Python, TypeScript, A2SV, Riftronix, iCog Labs, Software Engineer Addis Ababa`,
+        },
+        { name: "author", content: PROFILE.name },
+        { name: "gender", content: PROFILE.gender },
+        {
+          property: "og:title",
+          content: `${PROFILE.name} — Backend & Distributed Systems Engineer | AAiT`,
+        },
+        {
+          property: "og:description",
+          content: `Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. ${PROFILE.university} student & A2SV trainee.`,
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: `${SITE_URL}/` },
+        {
+          property: "og:image",
+          content: `${SITE_URL}/og-image.png`,
+        },
+        { property: "profile:first_name", content: PROFILE.givenName },
+        { property: "profile:last_name", content: PROFILE.familyName },
+        { property: "profile:gender", content: PROFILE.gender.toLowerCase() },
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "twitter:title",
+          content: `${PROFILE.name} — Backend & Distributed Systems Engineer`,
+        },
+        {
+          name: "twitter:description",
+          content: `Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. ${PROFILE.university} & A2SV.`,
+        },
+        {
+          name: "twitter:image",
+          content: `${SITE_URL}/og-image.png`,
+        },
+      ],
+      links: [
+        {
+          rel: "canonical",
+          href: `${SITE_URL}/`,
+        },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: structuredData,
+        },
+      ],
+    };
+  },
   component: Home,
 });
 
@@ -257,7 +292,7 @@ function Home() {
     <main className="flex min-h-screen w-full flex-col lg:flex-row">
       {/* ════════════ LEFT PANEL ════════════ */}
       <div className="panel-scroll w-full p-6 sm:p-10 lg:h-screen lg:w-[58%] lg:overflow-y-auto lg:p-14">
-        {/* Top Header: Avatar with Online Indicator & ThemeToggle */}
+        {/* Top Header: Avatar with Online Indicator, About Link & ThemeToggle */}
         <div className="flex items-start justify-between">
           <div className="relative inline-block">
             <img
@@ -276,12 +311,24 @@ function Home() {
               </span>
             </span>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <a
+              href="#about"
+              className="glass-chip inline-flex items-center gap-1.5 rounded-full border border-black/[0.06] px-3.5 py-1.5 text-xs font-medium text-foreground transition-all hover:scale-105"
+            >
+              About
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Hero */}
-        <section className="mt-5">
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+        <section className="mt-5" itemScope itemType="https://schema.org/Person">
+          <meta itemProp="name" content={PROFILE.name} />
+          <meta itemProp="gender" content={PROFILE.gender} />
+          <meta itemProp="jobTitle" content={PROFILE.title} />
+          <meta itemProp="nationality" content={PROFILE.country} />
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl" itemProp="name">
             Bethe Bayou
           </h1>
           <p className="mt-1 text-sm font-medium text-muted-foreground">
@@ -308,10 +355,16 @@ function Home() {
         </section>
 
         {/* Bio Narrative */}
-        <section id="about" className="mt-8 space-y-3 text-[15px] leading-relaxed text-foreground/85">
+        <section
+          id="about"
+          className="mt-8 space-y-3 text-[15px] leading-relaxed text-foreground/85"
+          itemScope
+          itemType="https://schema.org/Person"
+        >
+          <meta itemProp="gender" content="Male" />
           <p>
             I'm a software engineer at{" "}
-            <span className="font-semibold text-foreground">
+            <span className="font-semibold text-foreground" itemProp="alumniOf">
               Addis Ababa University (AAiT)
             </span>{" "}
             specializing in{" "}
@@ -343,7 +396,7 @@ function Home() {
         {/* CTAs */}
         <section className="mt-8 flex flex-wrap items-center gap-3">
           <a
-            href="https://drive.google.com/file/d/12fQlLoHU8imw-gk6fSV9PQEKMktzndQB/view?usp=drive_link"
+            href={RESUME_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"

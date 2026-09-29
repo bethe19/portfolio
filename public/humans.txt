@@ -1,0 +1,19 @@
+/* TEAM */
+  Engineer: Bethe Bayou
+  Gender: Male
+  Role: Backend & Distributed Systems Engineer
+  Education: Addis Ababa University (AAiT) — B.Sc. Software Engineering
+  Affiliation: Africa to Silicon Valley (A2SV)
+  Location: Addis Ababa, Ethiopia
+  Contact: bethebayou@gmail.com
+  GitHub: https://github.com/bethe19
+  LinkedIn: https://www.linkedin.com/in/bethe-bayou
+  Telegram: https://t.me/bethe19
+  Resume: https://drive.google.com/file/d/1VKc7u8Ffdal_BR1NBieaXFP7xqkMAomv/view?usp=drive_link
+
+/* SITE */
+  Standards: HTML5, CSS3, ECMAScript 2024, TypeScript
+  Frameworks: TanStack Start, TanStack Router, React 19, Tailwind CSS
+  Architecture: Microservices, gRPC, Apache Kafka, Event-Driven, Saga Pattern
+  Language: English, Amharic
+  Doctype: HTML5

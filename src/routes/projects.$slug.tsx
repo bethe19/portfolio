@@ -1,6 +1,7 @@
-﻿import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getProject, projects, type Project } from "@/lib/projects";
+import { RESUME_URL, PROFILE, SITE_URL } from "@/lib/constants";
 import {
   ArrowLeft,
   ExternalLink,
@@ -22,38 +23,106 @@ export const Route = createFileRoute("/projects/$slug")({
   head: ({ loaderData }) => {
     const p = loaderData?.project;
     const title = p
-      ? `${p.name} — Case Study | Bethe Bayou`
+      ? `${p.name} — Architecture Case Study | Bethe Bayou (AAiT Software Engineer)`
       : "Project — Bethe Bayou";
     const desc = p
-      ? `${p.tagline} Built with ${p.tech.join(", ")}. Architecture case study by Bethe Bayou.`
+      ? `${p.tagline} Built with ${p.tech.join(", ")}. Distributed systems and backend architecture deep dive by Bethe Bayou (Addis Ababa University AAiT).`
       : "Project case study by Bethe Bayou.";
     const url = p
-      ? `https://bethebayou.me/projects/${p.slug}`
-      : "https://bethebayou.me";
+      ? `${SITE_URL}/projects/${p.slug}`
+      : SITE_URL;
     const keywords = p
-      ? `${p.name}, ${p.tech.join(", ")}, Bethe Bayou, case study, backend project, ${p.stack}`
+      ? `${p.name}, ${p.tech.join(", ")}, Bethe Bayou, Addis Ababa University, AAiT, architecture case study, backend project, distributed systems, microservices, ${p.stack}`
       : "Bethe Bayou, project";
+
+    const schemaData = p
+      ? JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "TechArticle",
+              "@id": `${url}#article`,
+              headline: `${p.name} — Architecture Case Study`,
+              description: desc,
+              url,
+              author: {
+                "@type": "Person",
+                name: PROFILE.name,
+                url: SITE_URL,
+                gender: PROFILE.gender,
+                alumniOf: {
+                  "@type": "CollegeOrUniversity",
+                  name: PROFILE.organizations.university.name,
+                },
+              },
+              inLanguage: "en-US",
+              about: p.tech.map((t) => ({ "@type": "Thing", name: t })),
+              image: `${SITE_URL}/og-image.png`,
+            },
+            {
+              "@type": "BreadcrumbList",
+              "@id": `${url}#breadcrumb`,
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: `${SITE_URL}/`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Projects",
+                  item: `${SITE_URL}/#projects`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: p.name,
+                  item: url,
+                },
+              ],
+            },
+          ],
+        })
+      : undefined;
+
     return {
       meta: [
         { title },
         { name: "description", content: desc },
         { name: "keywords", content: keywords },
+        { name: "author", content: PROFILE.name },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
         { property: "og:url", content: url },
         {
           property: "og:image",
-          content: "https://bethebayou.me/og-image.png",
+          content: `${SITE_URL}/og-image.png`,
         },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
         {
           name: "twitter:image",
-          content: "https://bethebayou.me/og-image.png",
+          content: `${SITE_URL}/og-image.png`,
         },
       ],
+      links: [
+        {
+          rel: "canonical",
+          href: url,
+        },
+      ],
+      scripts: schemaData
+        ? [
+            {
+              type: "application/ld+json",
+              children: schemaData,
+            },
+          ]
+        : [],
     };
   },
   notFoundComponent: () => (
@@ -93,7 +162,7 @@ function ProjectPage() {
         </Link>
         <div className="flex items-center gap-2">
           <a
-            href="https://drive.google.com/file/d/12fQlLoHU8imw-gk6fSV9PQEKMktzndQB/view?usp=drive_link"
+            href={RESUME_URL}
             target="_blank"
             rel="noreferrer"
             className="glass-chip inline-flex items-center gap-1.5 rounded-full border border-black/[0.06] px-3 py-1.5 text-xs font-medium text-foreground transition-all hover:scale-105"

@@ -1,9 +1,27 @@
-﻿# Crawlers welcome
+# Crawlers welcome — Bethe Bayou Portfolio & Engineering Case Studies
 User-agent: *
 Allow: /
 
-# Sitemap
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Canonical Sitemap
 Sitemap: https://bethebayou.me/sitemap.xml
 
-# Host
+# Canonical Host
 Host: https://bethebayou.me
