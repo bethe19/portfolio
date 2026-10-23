@@ -1,33 +1,44 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [isLight, setIsLight] = useState(false);
+
+  const applyTheme = (light: boolean) => {
+    setIsLight(light);
+    document.documentElement.classList.toggle("light", light);
+    document.documentElement.classList.toggle("dark", !light);
+    document.documentElement.setAttribute("data-theme", light ? "light" : "dark");
+    localStorage.setItem("theme", light ? "light" : "dark");
+    window.dispatchEvent(new CustomEvent("themechange", { detail: { theme: light ? "light" : "dark" } }));
+  };
 
   useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem("theme");
-    const prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored ? stored === "dark" : prefers;
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    const light = stored === "light";
+    setIsLight(light);
+    document.documentElement.classList.toggle("light", light);
+    document.documentElement.classList.toggle("dark", !light);
+    document.documentElement.setAttribute("data-theme", light ? "light" : "dark");
   }, []);
 
   const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+    applyTheme(!isLight);
   };
 
   return (
     <button
       onClick={toggle}
-      aria-label="Toggle theme"
-      className="glass-chip inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.06] text-muted-foreground transition-all hover:text-foreground hover:scale-105"
+      aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      title={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      className="glass-panel inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground/80 transition-all hover:text-foreground hover:scale-105 shadow-xs cursor-pointer"
     >
-      {mounted && dark ? <Sun size={15} /> : <Moon size={15} />}
+      {mounted && isLight ? <Moon size={15} /> : <Sun size={15} />}
     </button>
   );
 }
+
+export default ThemeToggle;
+

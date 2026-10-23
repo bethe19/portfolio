@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="google-site-verification" content="dJeMmBSF_G3w7KT2-qCkhnHMBKVEsP2z4ncbQEk7wF0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#090a0f" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fcfbf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0908" media="(prefers-color-scheme: dark)" />
     <meta name="color-scheme" content="light dark" />
+
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem("theme");
+          var isLight = stored === "light";
+          if (isLight) {
+            document.documentElement.classList.remove("dark");
+            document.documentElement.classList.add("light");
+            document.documentElement.setAttribute("data-theme", "light");
+          } else {
+            document.documentElement.classList.remove("light");
+            document.documentElement.classList.add("dark");
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
 
     <!-- ── Primary Meta Tags ── -->
     <title>Bethe Bayou — Backend & Distributed Systems Engineer | Addis Ababa University (AAiT)</title>
@@ -78,7 +96,7 @@
     <!-- ── Fonts ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
 
     <!-- ── Favicon ── -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
