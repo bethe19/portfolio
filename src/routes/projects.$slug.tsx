@@ -137,7 +137,7 @@ export const Route = createFileRoute("/projects/$slug")({
   errorComponent: ({ error }) => (
     <main className="mx-auto max-w-2xl px-6 py-24 text-center">
       <p className="text-sm text-muted-foreground">
-        Something went wrong: {error.message}
+        Something went wrong: {error instanceof Error ? error.message : String(error)}
       </p>
     </main>
   ),
