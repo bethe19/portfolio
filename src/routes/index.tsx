@@ -1,105 +1,144 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { projects } from "@/lib/projects";
-import { PROFILE, SITE_URL } from "@/lib/constants";
-import { getPersonJsonLd, getWebSiteJsonLd, getProfilePageJsonLd } from "@/lib/seo";
+import { profile } from "@/data";
+import { Intro } from "@/components/intro";
+import { Experience } from "@/components/experience";
+import { Education } from "@/components/education";
+import { Projects } from "@/components/projects";
+import { Skills } from "@/components/skills";
+import { Contact } from "@/components/contact";
 
-import { CustomCursor } from "@/components/CustomCursor";
-import { Navbar } from "@/components/Navbar";
-import { HeroSection } from "@/components/HeroSection";
-import { WhatIDoSection } from "@/components/WhatIDoSection";
-import { CareerSection } from "@/components/CareerSection";
-import { ProjectsSection } from "@/components/ProjectsSection";
-import { TechStackSection } from "@/components/TechStackSection";
-import { ContactSection } from "@/components/ContactSection";
+const siteUrl = "https://bethebayou.me";
+const title = "Bethe Bayou | Backend-Focused Full-Stack Engineer";
+const description =
+  "Bethe Bayou is a backend-focused full-stack engineer based in Addis Ababa, Ethiopia, who builds fast, reliable microservices, distributed systems, and modern web applications.";
 
 export const Route = createFileRoute("/")({
   head: () => {
-    const personLd = getPersonJsonLd();
-    const websiteLd = getWebSiteJsonLd();
-    const profilePageLd = getProfilePageJsonLd();
-    const projectsItemListLd = {
+    const jsonLd = {
       "@context": "https://schema.org",
-      "@type": "ItemList",
-      name: "Featured Engineering Case Studies",
-      itemListElement: projects.map((p, idx) => ({
-        "@type": "ListItem",
-        position: idx + 1,
-        url: `${SITE_URL}/projects/${p.slug}`,
-        name: p.name,
-        description: p.tagline,
-      })),
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": `${siteUrl}/#person`,
+          name: "Bethe Bayou",
+          givenName: "Bethe",
+          familyName: "Bayou",
+          url: `${siteUrl}/`,
+          email: "mailto:bethebayou@gmail.com",
+          jobTitle: "Backend-Focused Full-Stack Engineer",
+          description,
+          hasOccupation: {
+            "@type": "Occupation",
+            name: "Software Engineer",
+            occupationLocation: { "@type": "City", name: "Addis Ababa, Ethiopia" },
+          },
+          image: {
+            "@type": "ImageObject",
+            url: `${siteUrl}/hero-light.png`,
+            width: 800,
+            height: 800,
+          },
+          sameAs: [
+            "https://github.com/bethe19",
+            "https://www.linkedin.com/in/bethe-bayou",
+            "https://t.me/bethe19",
+          ],
+          knowsAbout: [
+            "Software Engineering",
+            "Backend Development",
+            "Distributed Systems",
+            "Microservices",
+            "Go",
+            "Python",
+            "TypeScript",
+            "gRPC",
+            "Apache Kafka",
+            "PostgreSQL",
+            "Redis",
+            "Docker",
+          ],
+          alumniOf: {
+            "@type": "CollegeOrUniversity",
+            name: "Addis Ababa University",
+            url: "https://www.aau.edu.et/",
+          },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Addis Ababa",
+            addressCountry: "ET",
+          },
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          name: "Bethe Bayou",
+          alternateName: ["Bethe Bayou Portfolio", "bethebayou.me"],
+          url: `${siteUrl}/`,
+          description,
+          inLanguage: "en",
+          author: { "@id": `${siteUrl}/#person` },
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": `${siteUrl}/#profilepage`,
+          url: `${siteUrl}/`,
+          name: title,
+          description,
+          dateModified: new Date().toISOString(),
+          isPartOf: { "@id": `${siteUrl}/#website` },
+          mainEntity: { "@id": `${siteUrl}/#person` },
+        },
+      ],
     };
-
-    const structuredData = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": [personLd, websiteLd, profilePageLd, projectsItemListLd],
-    });
 
     return {
       meta: [
-        {
-          title: `${PROFILE.name} — Backend & Distributed Systems Engineer | ${PROFILE.university}`,
-        },
-        {
-          name: "description",
-          content: `${PROFILE.name} is a backend and distributed systems engineer building high-throughput microservices with Go, gRPC, Apache Kafka, and PostgreSQL. ${PROFILE.degree} student at ${PROFILE.universityFull} & A2SV trainee in ${PROFILE.location}. Open to backend engineering roles.`,
-        },
+        { title },
+        { name: "description", content: description },
         {
           name: "keywords",
-          content: `${PROFILE.name}, software engineer, Addis Ababa University, AAiT, AAU Ethiopia, Backend Engineer, Go Developer, Distributed Systems, Microservices, gRPC, Kafka, Python, TypeScript, A2SV, Riftronix, iCog Labs, Software Engineer Addis Ababa`,
+          content:
+            "Bethe Bayou, Software Engineer, Software Engineer Ethiopia, Backend Engineer, Distributed Systems, Go Developer, Addis Ababa, Ethiopia, AAiT, A2SV, Kafka, gRPC, Docker, PostgreSQL",
         },
-        { name: "author", content: PROFILE.name },
-        { name: "gender", content: PROFILE.gender },
-        {
-          property: "og:title",
-          content: `${PROFILE.name} — Backend & Distributed Systems Engineer | AAiT`,
-        },
-        {
-          property: "og:description",
-          content: `Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. ${PROFILE.university} student & A2SV trainee.`,
-        },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: `${SITE_URL}/` },
-        { property: "og:image", content: `${SITE_URL}/og-image.png` },
-        { property: "profile:first_name", content: PROFILE.givenName },
-        { property: "profile:last_name", content: PROFILE.familyName },
-        { property: "profile:gender", content: PROFILE.gender.toLowerCase() },
+        { name: "author", content: profile.name },
+        { property: "og:type", content: "profile" },
+        { property: "og:site_name", content: "Bethe Bayou" },
+        { property: "og:url", content: `${siteUrl}/` },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: `${siteUrl}/hero-light.png` },
         { name: "twitter:card", content: "summary_large_image" },
-        {
-          name: "twitter:title",
-          content: `${PROFILE.name} — Backend & Distributed Systems Engineer`,
-        },
-        {
-          name: "twitter:description",
-          content: `Backend engineer building high-throughput distributed systems with Go, gRPC, Kafka, and PostgreSQL. ${PROFILE.university} & A2SV.`,
-        },
-        { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: `${siteUrl}/hero-light.png` },
       ],
-      links: [{ rel: "canonical", href: `${SITE_URL}/` }],
-      scripts: [{ type: "application/ld+json", children: structuredData }],
+      links: [{ rel: "canonical", href: `${siteUrl}/` }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        },
+      ],
     };
   },
-  component: Home,
+  component: Portfolio,
 });
 
-function Home() {
+export default function Portfolio() {
   return (
-    <div className="main-body">
-      {/* Cursor */}
-      <CustomCursor />
-
-      {/* Navbar + circles */}
-      <Navbar />
-
-      {/* Main page flow */}
-      <main className="container-main">
-        <HeroSection />
-        <WhatIDoSection />
-        <CareerSection />
-        <ProjectsSection />
-        <TechStackSection />
-        <ContactSection />
+    <div className="mx-auto w-full max-w-3xl px-4 pb-16 pt-10 sm:px-6 md:pt-16">
+      <main>
+        <Intro />
+        <Experience />
+        <Education />
+        <Projects />
+        <Skills />
+        <Contact />
       </main>
+      <footer className="mt-16 flex flex-wrap justify-between gap-2 border-t border-border pt-6 text-xs text-muted-foreground">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
+        <p>{profile.location}</p>
+      </footer>
     </div>
   );
 }
