@@ -82,11 +82,20 @@ export type Project = {
   tech: string[];
   // Without an image the card shows a placeholder with the project title
   image?: string;
+  video?: string;
   github?: string;
   live?: string;
 };
 
 export const projects: Project[] = [
+  {
+    title: "Bunaproof — Coffee Traceability Platform",
+    description:
+      "Bunaproof is a coffee traceability platform designed to improve transparency and trust across the coffee supply chain. It connects coffee-related operations through a digital system that helps track products, manage workflows, and provide useful insights. I contributed to building the platform’s backend using Django and FastAPI, including backend services and AI-powered coffee classification and recommendation features.",
+    tech: ["Python", "FastAPI", "Django", "Machine Learning", "PostgreSQL", "REST API"],
+    video: "/video/bunaproof-dashboard-demo.mp4",
+    live: "https://bunaproof.com",
+  },
   {
     title: "Mini-Order",
     description:

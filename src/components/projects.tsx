@@ -19,13 +19,62 @@ export function Projects() {
             )}
             <article className="flex h-full flex-col sm:h-auto sm:flex-row">
               <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded border border-border bg-muted transition-all duration-300 group-hover:border-foreground group-hover:shadow-lg sm:w-[40%] sm:self-center">
-                {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={`${project.title} project preview`}
-                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                    loading="eager"
-                  />
+                {project.video ? (
+                  project.live || project.github ? (
+                    <a
+                      href={project.live || project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full w-full"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <video
+                        src={project.video}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </a>
+                  ) : (
+                    <video
+                      src={project.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )
+                ) : project.image ? (
+                  project.live || project.github ? (
+                    <a
+                      href={project.live || project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full w-full"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <img
+                        src={project.image}
+                        alt={`${project.title} project preview`}
+                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        loading="eager"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project preview`}
+                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      loading="eager"
+                    />
+                  )
                 ) : (
                   <div
                     aria-hidden

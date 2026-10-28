@@ -212,15 +212,17 @@ function ProjectPage() {
 
         {/* Action Buttons */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
-          >
-            <Github size={15} />
-            View Source
-          </a>
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            >
+              <Github size={15} />
+              View Source
+            </a>
+          )}
           {project.live && (
             <a
               href={project.live}
@@ -233,6 +235,20 @@ function ProjectPage() {
             </a>
           )}
         </div>
+
+        {project.video && (
+          <div className="mt-8 overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-muted/20 shadow-md">
+            <video
+              src={project.video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              className="w-full aspect-video object-cover"
+            />
+          </div>
+        )}
       </section>
 
       {/* ── Divider ── */}

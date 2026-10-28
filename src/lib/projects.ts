@@ -4,9 +4,11 @@ export type Project = {
   tagline: string;
   stack: string;
   year: string;
-  github: string;
+  github?: string;
   live?: string;
   logo?: string;
+  video?: string;
+  image?: string;
   about: string[];
   highlights: string[];
   tech: string[];
@@ -19,6 +21,69 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "bunaproof",
+    name: "Bunaproof",
+    tagline:
+      "A coffee traceability platform designed to improve transparency and trust across the coffee supply chain.",
+    stack: "Python · FastAPI · Django · Machine Learning",
+    year: "2026",
+    live: "https://bunaproof.com",
+    video: "/video/bunaproof-dashboard-demo.mp4",
+    about: [
+      "Bunaproof is a coffee traceability platform designed to improve transparency and trust across the coffee supply chain. It connects coffee-related operations through a digital system that helps track products, manage workflows, and provide useful insights.",
+      "I contributed to building the platform's backend using Django and FastAPI, including backend services and AI-powered coffee classification and recommendation features. The system was designed with scalability, maintainability, and real-world operational needs in mind.",
+    ],
+    highlights: [
+      "Digital traceability platform connecting coffee-related operations across the supply chain",
+      "Scalable backend services built with Django and FastAPI with clean domain boundaries",
+      "AI-powered coffee classification and personalized recommendation engines",
+      "End-to-end product tracking, workflow management, and operational analytics",
+      "Engineered for maintainability, high concurrency, and real-world enterprise requirements",
+    ],
+    tech: ["Python", "FastAPI", "Django", "Machine Learning", "PostgreSQL", "REST API", "Docker"],
+    architecture: {
+      overview:
+        "Bunaproof combines Django for robust domain entities, relational models, and admin workflows with FastAPI for high-performance asynchronous services and AI-powered coffee classification and recommendation pipelines.",
+      decisions: [
+        {
+          title: "Hybrid FastAPI & Django Backend",
+          detail:
+            "Django provides robust ORM capabilities, administrative tooling, and user authentication, while FastAPI handles low-latency API routes and machine learning model inference.",
+        },
+        {
+          title: "AI Coffee Classification & Recommendation",
+          detail:
+            "Implemented machine learning pipelines for automated coffee grading, defect detection, and cup profile matching to enhance transparency and quality verification across the chain.",
+        },
+        {
+          title: "End-to-End Traceability & Audit Trails",
+          detail:
+            "Engineered structured logging and relational history schemas ensuring every stage from harvest to export is tracked and verifiable.",
+        },
+      ],
+      components: [
+        {
+          name: "Traceability & Workflow Engine",
+          role: "Tracks coffee batches, processing stages, and supply chain transitions",
+        },
+        {
+          name: "AI Recommendation & Classification Service",
+          role: "FastAPI inference service for quality classification and matching",
+        },
+        {
+          name: "Relational Persistence Layer",
+          role: "PostgreSQL storage with transactional guarantees and role-based data isolation",
+        },
+      ],
+      dataFlow: [
+        "Coffee batch and harvest telemetry ingested through backend API endpoints",
+        "AI classification service evaluates bean profile and generates recommendations",
+        "Traceability events are committed with audit histories in PostgreSQL",
+        "Insights and operational dashboards are surfaced to stakeholders via bunaproof.com",
+      ],
+    },
+  },
   {
     slug: "mini-order",
     name: "Mini-Order",

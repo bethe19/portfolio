@@ -80,19 +80,30 @@ export function ProjectsSection() {
                 </div>
                 <div className="work-image">
                   <div className="work-image-in">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="work-img-link">
-                      <img
-                        src={imgSrc}
-                        alt={project.name}
-                        loading="lazy"
-                        className="work-project-img"
-                        onError={(e) => {
-                          const el = e.currentTarget as HTMLImageElement;
-                          el.style.display = "none";
-                          const placeholder = el.parentElement?.parentElement?.querySelector(".work-placeholder") as HTMLElement;
-                          if (placeholder) placeholder.style.display = "flex";
-                        }}
-                      />
+                    <a href={project.live || project.github} target="_blank" rel="noopener noreferrer" className="work-img-link">
+                      {project.video ? (
+                        <video
+                          src={project.video}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="work-project-img object-cover w-full h-full"
+                        />
+                      ) : (
+                        <img
+                          src={imgSrc}
+                          alt={project.name}
+                          loading="lazy"
+                          className="work-project-img"
+                          onError={(e) => {
+                            const el = e.currentTarget as HTMLImageElement;
+                            el.style.display = "none";
+                            const placeholder = el.parentElement?.parentElement?.querySelector(".work-placeholder") as HTMLElement;
+                            if (placeholder) placeholder.style.display = "flex";
+                          }}
+                        />
+                      )}
                       <div className="work-link" aria-label="Open project repository">↗</div>
                     </a>
                     {/* Fallback: styled card only if image fails */}
